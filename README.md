@@ -7,13 +7,13 @@ npm init -y
 npm install express ws
 
 Run server:
-node server/server.js
+node server.js
 
-Отправить уведомление через PowerShell:
+Test notification via PowerShell:
 
 Invoke-RestMethod -Uri "http://localhost:3000/notify" -Method POST -ContentType "application/json" -Body '{"title":"New notification!","body":"Quack, quack"}'  
 
-Или Curl:
+Or Curl:
 
 curl -X POST http://localhost:3000/notify \
   -H "Content-Type: application/json" \
