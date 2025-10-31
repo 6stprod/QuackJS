@@ -1,3 +1,6 @@
+<img width="1144" height="416" alt="изображение" src="https://github.com/user-attachments/assets/25a19a24-4cd6-4ade-80f2-f713d2789fee" />
+
+
 # QuackJS
 🦆 What is quackjs? quackjs is a client-side JavaScript library that: communicates with the server (e.g., via WebSocket); receives new notifications as soon as possible; displays them to the user (as toast labels and/or system calls); and allows listening for events (notifications, connections, errors, etc.).
 
