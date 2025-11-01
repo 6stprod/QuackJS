@@ -331,34 +331,51 @@ Usage: see the bottom of this file for examples.
     }
 
     _connectWS() {
-      if (typeof WebSocket === 'undefined') {
-        // fallback
-        return this._connectSSE()
-      }
-      try {
-        const ws = new WebSocket(this.opts.url)
-        this._state.ws = ws
-        ws.onopen = () => {
-          this._state.connected = true
-          this._state.transport = 'ws'
-          this._state.reconInterval = this.opts.reconMinInterval
-          this.emit('connect', { transport: 'ws' })
-        }
-        ws.onmessage = (ev) => this._handleIncoming(ev.data)
-        ws.onclose = () => {
-          this._state.connected = false
-          this.emit('disconnect')
-          this._state.ws = null
-          if (this.opts.reconnect && !this._state.closing) this._reconnectWithBackoff(this._connectWS.bind(this))
-        }
-        ws.onerror = (e) => {
-          this.emit('error', e)
-        }
-      } catch (e) {
-        this.emit('error', e)
-        this._connectSSE()
-      }
-    }
+	  if (typeof WebSocket === 'undefined') {
+		// fallback
+		return this._connectSSE()
+	  }
+	  try {
+		const ws = new WebSocket(this.opts.url)
+		this._state.ws = ws
+
+		ws.onopen = () => {
+		  console.log('✅ WebSocket is open')
+		  this._state.connected = true
+		  this._state.transport = 'ws'
+		  this._state.reconInterval = this.opts.reconMinInterval
+		  this.emit('connect', { transport: 'ws' })
+
+		  // 🔐 Отправляем токен, если есть
+		  if (this.opts.token) {
+			ws.send(JSON.stringify({
+			  type: 'auth',
+			  token: this.opts.token
+			}))
+			console.log('🔑 Token sent:', this.opts.token)
+		  }
+		}
+
+		ws.onmessage = (ev) => this._handleIncoming(ev.data)
+
+		ws.onclose = () => {
+		  this._state.connected = false
+		  this.emit('disconnect')
+		  this._state.ws = null
+		  if (this.opts.reconnect && !this._state.closing)
+			this._reconnectWithBackoff(this._connectWS.bind(this))
+		}
+
+		ws.onerror = (e) => {
+		  this.emit('error', e)
+		}
+
+	  } catch (e) {
+		this.emit('error', e)
+		this._connectSSE()
+	  }
+	}
+
 
     _connectSSE() {
       if (typeof EventSource === 'undefined') return this._connectPoll()
