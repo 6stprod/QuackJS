@@ -12,9 +12,15 @@ Examples:
 
 Send to everyone: curl -X POST http://localhost:3000/notify -H "Content-Type: application/json" -d '{"title":"Notification","body":"Hello world!"}'
 
+<img width="1302" height="421" alt="изображение" src="https://github.com/user-attachments/assets/3aac100b-d027-49aa-98fe-5661967b242c" />
+
+
 Send to only one user:
 
-curl -X POST http://localhost:3000/notify -H "Content-Type: application/json" -d '{"token":"f54df5g4df6g4d6fg4d65f4g6d45fg65d4","title":"Private notification!","body":"Hello world!"}'
+curl -X POST http://localhost:3000/notify -H "Content-Type: application/json" -d '{"token":"USER_TOKEN","title":"Private notification!","body":"Hello world!"}'
+
+<img width="1402" height="358" alt="изображение" src="https://github.com/user-attachments/assets/66dc715c-5883-4fd8-b1cd-a1b32681b1a3" />
+
 
 
 Install:
