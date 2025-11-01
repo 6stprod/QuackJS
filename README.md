@@ -3,24 +3,28 @@
 
 
 # QuackJS
-🦆 What is quackjs? quackjs is a client-side JavaScript library that: communicates with the server (e.g., via WebSocket); receives new notifications as soon as possible; displays them to the user (as toast labels and/or system calls); and allows listening for events (notifications, connections, errors, etc.).
+🦆 What is QuackJS? It's a client-side JavaScript library that: communicates with the server (in this case, via WebSocket);
+receives new notifications and displays them to the user as pop-up notifications.
+
+You can send a message to all connected clients or to a specific client using its token.
+
+Examples:
+
+Send to everyone: curl -X POST http://localhost:3000/notify -H "Content-Type: application/json" -d '{"title":"Notification","body":"Hello world!"}'
+
+Send to only one user:
+
+curl -X POST http://localhost:3000/notify -H "Content-Type: application/json" -d '{"token":"f54df5g4df6g4d6fg4d65f4g6d45fg65d4","title":"Private notification!","body":"Hello world!"}'
 
 
-Install dependencies:
+Install:
 
 npm init -y
 npm install express ws
+_______________________
 
 Run server:
 
 node server.js
+_______________________
 
-Test notification via PowerShell:
-
-Invoke-RestMethod -Uri "http://localhost:3000/notify" -Method POST -ContentType "application/json" -Body '{"title":"New notification!","body":"Quack, quack"}'  
-
-Or Curl:
-
-curl -X POST http://localhost:3000/notify \
-  -H "Content-Type: application/json" \
-  -d '{"title":"New notification!","body":"Quack, quack"}'
