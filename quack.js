@@ -509,7 +509,7 @@ Usage: see the bottom of this file for examples.
 // wss.on('connection', function connection(ws) {
 //   console.log('client connected')
 //   setInterval(() => {
-//     const msg = JSON.stringify({ id: String(Math.random()), title: 'Новое сообщение', body: 'Проверка уведомлений ' + new Date().toLocaleTimeString() })
+//     const msg = JSON.stringify({ id: String(Math.random()), title: 'New message', body: 'Notification ' + new Date().toLocaleTimeString() })
 //     ws.send(msg)
 //   }, 10000)
 // })
