@@ -1,6 +1,6 @@
 /*
 quackjs — lightweight real-time notification library
-Version: 1.0.2
+Version: 1.0.3
 Author: 6stPROD
 License: MIT
 
@@ -186,7 +186,7 @@ Usage: see the bottom of this file for examples.
 
       const title = document.createElement('div')
       title.className = 'quack-title'
-      title.textContent = notification.title || 'Уведомление'
+      title.textContent = notification.title || 'Notification'
 
       const body = document.createElement('div')
       body.className = 'quack-body'
