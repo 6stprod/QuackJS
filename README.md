@@ -1,4 +1,5 @@
-<img width="1144" height="416" alt="изображение" src="https://github.com/user-attachments/assets/25a19a24-4cd6-4ade-80f2-f713d2789fee" />
+<img width="1189" height="339" alt="QuackJS" src="https://github.com/user-attachments/assets/cff11e3e-4f18-4872-9970-9ed841be2d0f" />
+
 
 
 # QuackJS
