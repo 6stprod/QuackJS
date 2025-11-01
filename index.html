@@ -7,6 +7,7 @@
   </head>
   <body style="font-family:sans-serif; margin:40px;">
     <h1>🐥 QuackJS — Realtime notification</h1>
+    <h1 id="youtoken"></h1>
     <button id="notify">Show local notification</button>
     <p>Send all a test notification from the server:</p>
     <pre><code>curl -X POST http://localhost:3000/notify -H "Content-Type: application/json" -d '{"title":"Hello!","body":"Its is server notification"}'</code></pre>
@@ -15,12 +16,13 @@
     <pre><code>curl -X POST http://localhost:3000/notify -H "Content-Type: application/json" -d '{"token":"TOKEN_HERE","title":"Private!","body":"Only for this user"}'</code></pre>
 	
     <script>
+	const randToken = Math.floor(Math.random() * 100);
+	document.getElementById("youtoken").innerHTML = 'Your token: ' + randToken;
      const q = new Quack({
 		url: "ws://localhost:3000",
 		transport: "auto",
 		native: true,
-		//token: document.cookie.replace(/(?:(?:^|.*;\s*)auth_token\s*\=\s*([^;]*).*$)|^.*$/, "$1")
-		token: 'TOKEN_HERE'
+		token: randToken
 	 });
 
       q.on("connect", info => console.log("✅ Connected:", info));
