@@ -7,6 +7,19 @@
 receives new notifications and displays them to the user as pop-up notifications.
 
 You can send a message to all connected clients or to a specific client using its token.
+_______________________
+
+Install:
+
+npm init -y
+npm install express ws
+_______________________
+
+Run server:
+
+node server.js
+_______________________
+
 
 Examples:
 
@@ -21,16 +34,4 @@ curl -X POST http://localhost:3000/notify -H "Content-Type: application/json" -d
 
 <img width="1402" height="358" alt="изображение" src="https://github.com/user-attachments/assets/66dc715c-5883-4fd8-b1cd-a1b32681b1a3" />
 
-
-
-Install:
-
-npm init -y
-npm install express ws
-_______________________
-
-Run server:
-
-node server.js
-_______________________
 
