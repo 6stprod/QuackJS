@@ -3,7 +3,6 @@
 const express = require("express");
 const { WebSocketServer } = require("ws");
 const { createServer } = require("http");
-const cookie = require("cookie");
 
 const app = express();
 const server = createServer(app);
@@ -15,40 +14,29 @@ app.use(express.json());
 // Clients map: Map<token, ws>
 const clients = new Map();
 
-// New connection
-wss.on("connection", (ws, req) => {
+wss.on("connection", ws => {
   console.log("🟢 New connection");
 
-  // Parse cookie, if isset
-  const cookies = req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
-  const tokenFromCookie = cookies.auth_token;
-
-  // We'll store the token temporarily in case it arrives later.
-  ws._token = tokenFromCookie || null;
-
-  ws.on("message", (msg) => {
+  ws.on("message", message => {
     try {
-      const data = JSON.parse(msg);
+      const data = JSON.parse(message);
       if (data.type === "auth" && data.token) {
-        ws._token = data.token;
-        clients.set(data.token, ws);
-        console.log("✅ Authenticated client with token:", data.token);
+        ws.token = String(data.token);
+        clients.set(ws.token, ws);
+        console.log(`✅ New token is authorize: ${ws.token}`);
       }
     } catch (err) {
-      console.warn("Invalid WS message:", msg);
+      console.error("Parse error:", err);
     }
   });
 
   ws.on("close", () => {
-    if (ws._token && clients.has(ws._token)) {
-      clients.delete(ws._token);
-    }
-    console.log("🔴 Client disconnected");
+    if (ws.token) clients.delete(ws.token);
+    console.log(`🔴 Client disconnected: ${ws.token || "(no_token)"}`);
   });
 });
 
-// 🔔 REST endpoint for sending notifications
-// You can specify a specific token in the JSON body
+// REST endpoint for send notify
 app.post("/notify", (req, res) => {
   const data = req.body;
 
@@ -63,9 +51,8 @@ app.post("/notify", (req, res) => {
   const msg = JSON.stringify(notification);
   let sent = 0;
 
-  //If a token is specified, we send it only to it.
   if (data.token) {
-    const ws = clients.get(data.token);
+    const ws = clients.get(String(data.token)); // <── find by token
     if (ws && ws.readyState === ws.OPEN) {
       ws.send(msg);
       sent = 1;
@@ -74,7 +61,6 @@ app.post("/notify", (req, res) => {
       console.log(`⚠️ No active client for token ${data.token}`);
     }
   } else {
-    // Else seng all clients
     for (const ws of clients.values()) {
       if (ws.readyState === ws.OPEN) {
         ws.send(msg);
@@ -92,3 +78,4 @@ server.listen(PORT, () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}`);
   console.log(`WebSocket: ws://localhost:${PORT}`);
 });
+
