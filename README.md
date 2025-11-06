@@ -1,4 +1,4 @@
-<img width="1189" height="339" alt="QuackJS" src="https://github.com/user-attachments/assets/cff11e3e-4f18-4872-9970-9ed841be2d0f" />
+<img width="1108" height="527" alt="изображение" src="https://github.com/user-attachments/assets/e8cf5305-22ef-4792-b243-4f9d63783fb6" />
 
 
 
@@ -33,15 +33,9 @@ Send to everyone:
 curl -X POST http://127.0.0.1:3000/notify   -H "Content-Type: application/json"   -d '{"login":"","title":"Notice","body":"Message"}'
 ```
 
-<img width="1302" height="421" alt="изображение" src="https://github.com/user-attachments/assets/3aac100b-d027-49aa-98fe-5661967b242c" />
-
-
 Send to only one user:
 
 ```
 curl -X POST http://127.0.0.1:3000/notify   -H "Content-Type: application/json"   -d '{"login":"test","title":"Notice","body":"Message"}'
 ```
-
-<img width="1402" height="358" alt="изображение" src="https://github.com/user-attachments/assets/66dc715c-5883-4fd8-b1cd-a1b32681b1a3" />
-
 
