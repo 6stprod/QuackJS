@@ -38,14 +38,17 @@
 			console.error("Notification_ID not found!: ", notification);
 		  }
 		});
+
+		 document.getElementById("notify").onclick = () => {
+	        q.show({ title: "Local", body: "Test notification!" });
+	      };
 	}
 
-      document.getElementById("notify").onclick = () => {
-        q.show({ title: "Local", body: "Test notification!" });
-      };
+     
     </script>
   </body>
 </html>
+
 
 
 
