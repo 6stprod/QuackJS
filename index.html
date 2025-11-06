@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>QuackJS</title>
+    <script src="./quack.js"></script>
+  </head>
+  <body style="font-family:sans-serif; margin:40px;">
+    <h1>🐥 QuackJS — Realtime notification</h1>
+    <h1 id="youlogin"></h1>
+    <button id="notify">Show local notification</button>
+    <p>Send all a test notification from the server:</p>
+    <pre><code>curl -X POST http://127.0.0.1:3000/notify   -H "Content-Type: application/json"   -d '{"login":"","title":"Notice","body":"Message"}'/code></pre>
+	
+	<p>Send a message to a user with a token:</p>
+    <pre><code>curl -X POST http://127.0.0.1:3000/notify   -H "Content-Type: application/json"   -d '{"login":"test","title":"Notice","body":"Message"}'</code></pre>
+	
+    <script>
+	const userlogin = 'test';
+	document.getElementById("youlogin").innerHTML = 'Your login: ' + userlogin;
+    if (typeof Quack !== 'undefined') {
+		const q = new Quack({url: "ws://127.0.0.1:3000",transport: "auto",native: true,login: userlogin});
+		q.connect();
+		q.on("connect", () => {
+	
+		  if (ltvLogin) {
+			q.send(JSON.stringify({
+			  type: "auth",
+			  login: ltvLogin
+			}));
+		  }
+		});
+	
+		q.on("notification", (notification) => {
+		  if (notification.id) {
+			q.send({type: "ack",notificationId: notification.id,status: "read"});
+		  } else {
+			console.error("Notification_ID not found!: ", notification);
+		  }
+		});
+	}
+
+      document.getElementById("notify").onclick = () => {
+        q.show({ title: "Local", body: "Test notification!" });
+      };
+    </script>
+  </body>
+</html>
+
+
+
+
