@@ -23,10 +23,10 @@
 		q.connect();
 		q.on("connect", () => {
 	
-		  if (ltvLogin) {
+		  if (userlogin) {
 			q.send(JSON.stringify({
 			  type: "auth",
-			  login: ltvLogin
+			  login: userlogin
 			}));
 		  }
 		});
@@ -46,6 +46,7 @@
     </script>
   </body>
 </html>
+
 
 
 
